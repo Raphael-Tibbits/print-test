@@ -25,21 +25,21 @@ float low_pass_filter(float measured,  unsigned long dt,
 
 }
 
-void recieve(char* dest){
-  if(Serial){ 
-    Serial.flush();
+// void recieve(char* dest){
+//   if(Serial){ 
+//     Serial.flush();
 
-    memccpy(dest, Serial.readString().c_str(), 64, sizeof(char));
+//     memccpy(dest, Serial.readString().c_str(), 64, sizeof(char));
     
-    delayMicroseconds(1);
-    // String response = "R " + message;
-    Serial.print("R ");
-    Serial.flush();
-    Serial.println(dest);
+//     delayMicroseconds(1);
+//     // String response = "R " + message;
+//     Serial.print("R ");
+//     Serial.flush();
+//     Serial.println(dest);
 
-  }
+//   }
   
-}
+// }
 
 void Lander::print_error(const char* description){
   if(Serial){
@@ -154,27 +154,27 @@ void Lander::handleTOF(){
   this->cLander.tof_s = alt - this->tOffset;
 }
 
-void Lander::prep_for_test(){
+// void Lander::prep_for_test(){
 
-  this->cLander.s = 0; // lander true position
-  this->cLander.v = 0; // lander true velocity
-  this->cLander.a = 0; // lander true acceleration
-  this->cLander.now = 0; // lander sample time
+//   this->cLander.s = 0; // lander true position
+//   this->cLander.v = 0; // lander true velocity
+//   this->cLander.a = 0; // lander true acceleration
+//   this->cLander.now = 0; // lander sample time
 
-  this->cLander.s_tgt = target_height; // current target altitude
+//   this->cLander.s_tgt = target_height; // current target altitude
 
-  this->cLander.tof_s = 0; // position according to tof
-  this->cLander.tof_time = 0; // time of tof reading
-  // this->cLander.tof_flag = 0;
+//   this->cLander.tof_s = 0; // position according to tof
+//   this->cLander.tof_time = 0; // time of tof reading
+//   // this->cLander.tof_flag = 0;
 
-  // this->cLander.IMU_time = 0; // time of IMU reading
-  // this->cLander.IMU_flag = 0;
+//   // this->cLander.IMU_time = 0; // time of IMU reading
+//   // this->cLander.IMU_flag = 0;
 
-  this->cLander.i_error = 0; // PID step intergrated value
+//   this->cLander.i_error = 0; // PID step intergrated value
 
-  this->cLander.throttle = 0; // current motor throttle, value 0 to 1000 inclusive
-  // this->cLander.prev->i_error = 0; // initial I error value
-  Serial.print("initial I:");
-  Serial.println(this->cLander.i_error);
+//   this->cLander.throttle = 0; // current motor throttle, value 0 to 1000 inclusive
+//   // this->cLander.prev->i_error = 0; // initial I error value
+//   Serial.print("initial I:");
+//   Serial.println(this->cLander.i_error);
 
-}
+// }

@@ -65,7 +65,7 @@ public:
     
     void update_lander();
     float calc_PID();
-    void prep_for_test();
+    // void prep_for_test();
     void print_error(const char* description);
 
     float cal_tof(uint8_t numSamples);

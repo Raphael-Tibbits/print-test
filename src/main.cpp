@@ -10,7 +10,16 @@ void software_reset(){
   while(1);
 }
 
+void recieve(char* buffer){
+  buffer[Serial.readBytesUntil('\0', buffer, 32)] = '\0';
+  
+  Serial.print("R ");
+  Serial.println(buffer);
+}
+
 Lander L;
+
+char response[32];
 
 void setup() {
   // pinMode(3, OUTPUT);
@@ -19,40 +28,38 @@ void setup() {
   Wire.begin();
   
   Serial.begin(112500);
-  char Response[64];
 
   // String message = ;
   Serial.println("Serial Connected");
 
-  Response[Serial.readBytesUntil('\0', Response, 64)] = '\0';
+  recieve(response);
 
-  Serial.print("R ");
-  Serial.println(Response);
 
   // while(!Serial.available());
   // delayMicroseconds(1280);
 
   
-  Response[Serial.readBytesUntil('\0', Response, 64)] = '\0';
+  recieve(response);
 
-  Serial.println(Response);
-  if(!strcmp(Response,"working")){
+  
+  if(!strcmp(response,"working")){
     Serial.println("starting Init");
     L.state = INITILISE_STATE;
   }else{
     L.print_error("incorrect response");
     software_reset();
   }
-  bool init_status, tof_status;//, imu_status;
-  tof_status = L.tof.begin();
-  Serial.print("TOF status:");
-  Serial.println(tof_status);
+  bool init_status;//, tof_status;//, imu_status;
+  init_status = L.tof.begin();
+  L.cal_tof(8);
+  // Serial.print("TOF status:");
+  // Serial.println(tof_status);
 
   // imu_status = L.IMU.begin();
   // Serial.print("IMU status:");
   // Serial.println(imu_status);
 
-  init_status = tof_status;// && imu_status;
+  // init_status = tof_status;// && imu_status;
 
   Serial.print("initilisation status:");
   Serial.println(init_status);
@@ -63,14 +70,12 @@ void setup() {
   }
 
 }
-char response[64];
+
 void loop() {
-  Serial.println("looing");
+  // Serial.println("looing");
 
   if(Serial.available()){
-    response[Serial.readBytesUntil('\0', response, 64)] = '\0';
-    Serial.print("R ");
-    Serial.println(response);
+    recieve(response);
   }
 
   if(strcmp(response, "calibrate ESC") && L.state == READY_STATE){
