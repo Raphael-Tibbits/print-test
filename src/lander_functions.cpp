@@ -90,11 +90,11 @@ void Lander::update_lander(){
   // copy current values to previous
   this->pLander = this->cLander;
 
-  this->cLander.IMU_time = micros();
-  handleIMU();
+  // this->cLander.IMU_time = micros();
+  // handleIMU();
   
-  this->cLander.a = this->cLander.raw_IMU.acceleration.y;
-  this->cLander.IMU_dt = this->cLander.IMU_time - this->cLander.prev->IMU_time;
+  // this->cLander.a = this->cLander.raw_IMU.acceleration.y;
+  // this->cLander.IMU_dt = this->cLander.IMU_time - this->cLander.prev->IMU_time;
   
   // predict_step(this->cLander);
 
@@ -106,23 +106,23 @@ void Lander::update_lander(){
   this->cLander.s = low_pass_filter(this->cLander.tof_s, this->cLander.tof_dt, this->cLander.prev->s);
   // update_step(this->cLander);
   
-  this->cLander.now = (this->cLander.IMU_time + this->cLander.tof_time )/ 2;
+  this->cLander.now = this->cLander.tof_time;
 
   this->cLander.v = (this->cLander.s - this->cLander.prev->s) * 1000 / this->cLander.tof_dt;
 
 
 }
 
-// returns the IMU reading in the z direction
-void Lander::handleIMU(){
-  // deals with IMU operations each iteration
-  sensors_event_t g, temp;
-  // average 16 IMU readings
+// // returns the IMU reading in the z direction
+// void Lander::handleIMU(){
+//   // deals with IMU operations each iteration
+//   sensors_event_t g, temp;
+//   // average 16 IMU readings
   
-  IMU.getEvent(&(this->cLander.raw_IMU), &g, &temp);
-  // *aout = a.acceleration;
+//   IMU.getEvent(&(this->cLander.raw_IMU), &g, &temp);
+//   // *aout = a.acceleration;
   
-}
+// }
 
 float Lander::cal_tof(uint8_t numSamples){
   // calculate TOF offset (height at the bottom of the rail)
@@ -167,7 +167,7 @@ void Lander::prep_for_test(){
   this->cLander.tof_time = 0; // time of tof reading
   // this->cLander.tof_flag = 0;
 
-  this->cLander.IMU_time = 0; // time of IMU reading
+  // this->cLander.IMU_time = 0; // time of IMU reading
   // this->cLander.IMU_flag = 0;
 
   this->cLander.i_error = 0; // PID step intergrated value

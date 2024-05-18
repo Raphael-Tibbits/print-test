@@ -43,16 +43,16 @@ void setup() {
     L.print_error("incorrect response");
     software_reset();
   }
-  bool init_status, tof_status, imu_status;
+  bool init_status, tof_status;//, imu_status;
   tof_status = L.tof.begin();
   Serial.print("TOF status:");
   Serial.println(tof_status);
 
-  imu_status = L.IMU.begin();
-  Serial.print("IMU status:");
-  Serial.println(imu_status);
+  // imu_status = L.IMU.begin();
+  // Serial.print("IMU status:");
+  // Serial.println(imu_status);
 
-  init_status = tof_status && imu_status;
+  init_status = tof_status;// && imu_status;
 
   Serial.print("initilisation status:");
   Serial.println(init_status);

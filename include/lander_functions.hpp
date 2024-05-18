@@ -2,7 +2,7 @@
 #define LANDER_FUNCTIONS_H
 
 // #include "lander_structs.hpp"
-#include <Adafruit_MPU6050.h>
+// #include <Adafruit_MPU6050.h>
 #include <Adafruit_VL53L0X.h>
 #include <Servo.h>
 #include <Arduino.h>
@@ -25,20 +25,20 @@ struct lander{
     float s_tgt; // current target altitude
 
     float tof_s; // position according to tof
-    long tof_time; // time of tof reading
-    int tof_dt;
+    unsigned long tof_time; // time of tof reading
+    unsigned int tof_dt;
     // int tof_flag;
 
-    sensors_event_t raw_IMU;
-    long IMU_time; // time of IMU reading
-    int IMU_dt;
+    // sensors_event_t raw_IMU;
+    // unsigned long IMU_time; // time of IMU reading
+    // unsigned int IMU_dt;
     // int IMU_flag;
 
-    float P[4] = {1.0, 0.0, 0.0, 1.0};
+    // float P[4] = {1.0, 0.0, 0.0, 1.0};
 
     float i_error; // PID step intergrated value
 
-    int throttle; // current motor throttle, value 0 to 1000 inclusive
+    short int throttle; // current motor throttle, value 0 to 1000 inclusive
 
     struct lander* prev; // pointer to the previous set of lander values
 };
@@ -79,25 +79,25 @@ public:
     uint8_t state;
 
     Adafruit_VL53L0X tof;
-    Adafruit_MPU6050 IMU;
+    // Adafruit_MPU6050 IMU;
 
     lander cLander;
     
 private:
-    void handleIMU();
+    // void handleIMU();
     void handleTOF();
 
-    float Q[4] = {0.0005, 0, 0, 0.0005};
-    float R = 0.05f;
-    float C[2] = {1.0, 0.0};
-    float P0[4] = {1.0, 0.0, 0.0, 1.0};
-    float Max_throttle = 700;
-    float Min_throttle = 0;
+    // float Q[4] = {0.0005, 0, 0, 0.0005};
+    // float R = 0.05f;
+    // float C[2] = {1.0, 0.0};
+    // float P0[4] = {1.0, 0.0, 0.0, 1.0};
+    short int Max_throttle = 700;
+    short int Min_throttle = 0;
     float tOffset = 0;
     
     
     lander pLander;
-    
+
 };
 
 #endif // LANDER_FUNCTIONS_
